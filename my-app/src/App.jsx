@@ -302,7 +302,7 @@ function App() {
           fontWeight: '600',
         }}
       >
-        🎨 Preview Mode - Using Mock Data
+        © 2025 Weather Dashboard. All rights reserved.
       </div>
     </div>
   );
