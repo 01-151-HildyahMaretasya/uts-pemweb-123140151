@@ -57,7 +57,7 @@ npm install
 3. **Konfigurasi API Key**
 - Daftar di [OpenWeatherMap](https://openweathermap.org/api) untuk mendapatkan API key gratis
 - Buka file `src/App.jsx`
-- Ganti value `API_KEY` dengan API key Anda
+- Ganti value `API_KEY` 
 
 4. **Jalankan Development Server**
 ```bash
@@ -85,7 +85,7 @@ npm run lint
 ```
 
 ## Link Deployment
-🌐 **Live Demo**: [https://uts-pemweb-[nim].vercel.app](https://uts-pemweb-[nim].vercel.app)
+🌐 **Live Demo**: https://uts-pemweb-123140151.vercel.app/
 
 ## Screenshot Aplikasi
 
