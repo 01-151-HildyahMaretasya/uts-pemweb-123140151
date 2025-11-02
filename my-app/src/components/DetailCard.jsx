@@ -1,6 +1,15 @@
 import { useState } from 'react';
 
-const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperatureSymbol }) => {
+const DetailCard = ({ 
+  weatherData, 
+  getWeatherIcon, 
+  formatTime, 
+  unit, 
+  temperatureSymbol,
+  showCompare = false,
+  jakartaWeather = null,
+  iknWeather = null
+}) => {
   const [showComparison, setShowComparison] = useState(false);
   const [compareCity, setCompareCity] = useState(null);
 
@@ -25,32 +34,8 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
   };
   const windDirection = wind.deg ? getWindDirection(wind.deg) : '';
 
-  // Static data untuk Jakarta & IKN
-  const staticCities = {
-    jakarta: {
-      name: 'Jakarta',
-      country: 'ID',
-      temp: 32,
-      feelsLike: 35,
-      humidity: 74,
-      windSpeed: 3.5,
-      icon: '☁️',
-      description: 'Broken Clouds'
-    },
-    ikn: {
-      name: 'IKN Nusantara',
-      country: 'ID',
-      temp: 30,
-      feelsLike: 33,
-      humidity: 65,
-      windSpeed: 2.8,
-      icon: '☀️',
-      description: 'Clear Sky'
-    }
-  };
-
-  const handleCompare = (cityKey) => {
-    setCompareCity(staticCities[cityKey]);
+  const handleCompare = (city) => {
+    setCompareCity(city);
     setShowComparison(true);
   };
 
@@ -65,9 +50,9 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
     
     if (type === 'temp') {
       if (diff > 0) {
-        return { text: `${Math.abs(diff)}° warmer`, color: '#f97316', icon: '🔥' };
+        return { text: `${Math.abs(diff).toFixed(1)}° warmer`, color: '#f97316', icon: '🔥' };
       } else if (diff < 0) {
-        return { text: `${Math.abs(diff)}° cooler`, color: '#06b6d4', icon: '❄️' };
+        return { text: `${Math.abs(diff).toFixed(1)}° cooler`, color: '#06b6d4', icon: '❄️' };
       } else {
         return { text: 'Same', color: '#10b981', icon: '=' };
       }
@@ -162,57 +147,31 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Jakarta & IKN Cards */}
-      <div className="static-weather-cards">
-        {Object.entries(staticCities).map(([key, city]) => (
-          <div key={key} className="static-weather-card">
-            <div className="static-weather-content">
-              <h3 className="static-weather-city">{city.name}, {city.country}</h3>
-              <p className="static-weather-time">
-                {formatTime(dt)} • {new Date(dt * 1000).toLocaleDateString('en-US', { weekday: 'long' })}
-              </p>
-              <div className="static-weather-icon">{city.icon}</div>
-              <div className="static-weather-temp">{city.temp}°C</div>
-              <div className="static-weather-desc">{city.description}</div>
-              
-              <div className="static-weather-details">
-                <div className="static-detail">
-                  <span className="static-detail-icon">🌡️</span>
-                  <div>
-                    <div className="static-detail-label">Feels Like</div>
-                    <div className="static-detail-value">{city.feelsLike}°C</div>
-                  </div>
-                </div>
-                <div className="static-detail">
-                  <span className="static-detail-icon">💧</span>
-                  <div>
-                    <div className="static-detail-label">Humidity</div>
-                    <div className="static-detail-value">{city.humidity}%</div>
-                  </div>
-                </div>
-                <div className="static-detail">
-                  <span className="static-detail-icon">💨</span>
-                  <div>
-                    <div className="static-detail-label">Wind</div>
-                    <div className="static-detail-value">{city.windSpeed} m/s</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Compare Button */}
+        {/* Compare Buttons - Only show after search */}
+        {showCompare && jakartaWeather && iknWeather && (
+          <div className="compare-buttons-section">
+            <h4 className="compare-title">Compare with:</h4>
+            <div className="compare-buttons">
               <button 
                 className="compare-button"
-                onClick={() => handleCompare(key)}
-                aria-label={`Compare weather with ${city.name}`}
+                onClick={() => handleCompare(jakartaWeather)}
+                aria-label="Compare weather with Jakarta"
               >
                 <span className="compare-icon">⚖️</span>
-                Compare with {name}
+                Jakarta
+              </button>
+              <button 
+                className="compare-button"
+                onClick={() => handleCompare(iknWeather)}
+                aria-label="Compare weather with IKN Nusantara"
+              >
+                <span className="compare-icon">⚖️</span>
+                IKN Nusantara
               </button>
             </div>
           </div>
-        ))}
+        )}
       </div>
 
       {/* Comparison Modal */}
@@ -227,7 +186,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
               Weather Comparison
             </h2>
             <p className="comparison-subtitle">
-              {name}, {sys.country} vs {compareCity.name}, {compareCity.country}
+              {name}, {sys.country} vs {compareCity.name}, {compareCity.sys.country}
             </p>
 
             <div className="comparison-grid">
@@ -239,13 +198,13 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
                 </div>
                 <div className="comparison-main">
                   <div className="comparison-icon">{weatherIcon}</div>
-                  <div className="comparison-temp">{temperature}°C</div>
+                  <div className="comparison-temp">{temperature}{temperatureSymbol}</div>
                   <div className="comparison-desc">{weather[0].description}</div>
                 </div>
                 <div className="comparison-details">
                   <div className="comparison-detail-item">
                     <span className="detail-label">Feels Like</span>
-                    <span className="detail-value">{feelsLike}°C</span>
+                    <span className="detail-value">{feelsLike}{temperatureSymbol}</span>
                   </div>
                   <div className="comparison-detail-item">
                     <span className="detail-label">Humidity</span>
@@ -253,7 +212,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
                   </div>
                   <div className="comparison-detail-item">
                     <span className="detail-label">Wind Speed</span>
-                    <span className="detail-value">{wind.speed} m/s</span>
+                    <span className="detail-value">{wind.speed} {unit === 'metric' ? 'm/s' : 'mph'}</span>
                   </div>
                 </div>
               </div>
@@ -263,52 +222,52 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
                 <div className="indicator-item">
                   <span className="indicator-label">Temperature</span>
                   <div className="indicator-badge" style={{ 
-                    backgroundColor: getComparison(temperature, compareCity.temp, 'temp').color + '20',
-                    color: getComparison(temperature, compareCity.temp, 'temp').color
+                    backgroundColor: getComparison(temperature, Math.round(compareCity.main.temp), 'temp').color + '20',
+                    color: getComparison(temperature, Math.round(compareCity.main.temp), 'temp').color
                   }}>
                     <span className="indicator-icon">
-                      {getComparison(temperature, compareCity.temp, 'temp').icon}
+                      {getComparison(temperature, Math.round(compareCity.main.temp), 'temp').icon}
                     </span>
-                    {getComparison(temperature, compareCity.temp, 'temp').text}
+                    {getComparison(temperature, Math.round(compareCity.main.temp), 'temp').text}
                   </div>
                 </div>
 
                 <div className="indicator-item">
                   <span className="indicator-label">Feels Like</span>
                   <div className="indicator-badge" style={{ 
-                    backgroundColor: getComparison(feelsLike, compareCity.feelsLike, 'temp').color + '20',
-                    color: getComparison(feelsLike, compareCity.feelsLike, 'temp').color
+                    backgroundColor: getComparison(feelsLike, Math.round(compareCity.main.feels_like), 'temp').color + '20',
+                    color: getComparison(feelsLike, Math.round(compareCity.main.feels_like), 'temp').color
                   }}>
                     <span className="indicator-icon">
-                      {getComparison(feelsLike, compareCity.feelsLike, 'temp').icon}
+                      {getComparison(feelsLike, Math.round(compareCity.main.feels_like), 'temp').icon}
                     </span>
-                    {getComparison(feelsLike, compareCity.feelsLike, 'temp').text}
+                    {getComparison(feelsLike, Math.round(compareCity.main.feels_like), 'temp').text}
                   </div>
                 </div>
 
                 <div className="indicator-item">
                   <span className="indicator-label">Humidity</span>
                   <div className="indicator-badge" style={{ 
-                    backgroundColor: getComparison(humidity, compareCity.humidity).color + '20',
-                    color: getComparison(humidity, compareCity.humidity).color
+                    backgroundColor: getComparison(humidity, compareCity.main.humidity).color + '20',
+                    color: getComparison(humidity, compareCity.main.humidity).color
                   }}>
                     <span className="indicator-icon">
-                      {getComparison(humidity, compareCity.humidity).icon}
+                      {getComparison(humidity, compareCity.main.humidity).icon}
                     </span>
-                    {getComparison(humidity, compareCity.humidity).text}
+                    {getComparison(humidity, compareCity.main.humidity).text}
                   </div>
                 </div>
 
                 <div className="indicator-item">
                   <span className="indicator-label">Wind Speed</span>
                   <div className="indicator-badge" style={{ 
-                    backgroundColor: getComparison(wind.speed, compareCity.windSpeed).color + '20',
-                    color: getComparison(wind.speed, compareCity.windSpeed).color
+                    backgroundColor: getComparison(wind.speed, compareCity.wind.speed).color + '20',
+                    color: getComparison(wind.speed, compareCity.wind.speed).color
                   }}>
                     <span className="indicator-icon">
-                      {getComparison(wind.speed, compareCity.windSpeed).icon}
+                      {getComparison(wind.speed, compareCity.wind.speed).icon}
                     </span>
-                    {getComparison(wind.speed, compareCity.windSpeed).text}
+                    {getComparison(wind.speed, compareCity.wind.speed).text}
                   </div>
                 </div>
               </div>
@@ -316,26 +275,26 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
               {/* Compare City */}
               <div className="comparison-card">
                 <div className="comparison-card-header">
-                  <h3>{compareCity.name}, {compareCity.country}</h3>
+                  <h3>{compareCity.name}, {compareCity.sys.country}</h3>
                   <span className="comparison-badge compare-badge">Reference</span>
                 </div>
                 <div className="comparison-main">
-                  <div className="comparison-icon">{compareCity.icon}</div>
-                  <div className="comparison-temp">{compareCity.temp}°C</div>
-                  <div className="comparison-desc">{compareCity.description}</div>
+                  <div className="comparison-icon">{getWeatherIcon(compareCity.weather[0].icon)}</div>
+                  <div className="comparison-temp">{Math.round(compareCity.main.temp)}{temperatureSymbol}</div>
+                  <div className="comparison-desc">{compareCity.weather[0].description}</div>
                 </div>
                 <div className="comparison-details">
                   <div className="comparison-detail-item">
                     <span className="detail-label">Feels Like</span>
-                    <span className="detail-value">{compareCity.feelsLike}°C</span>
+                    <span className="detail-value">{Math.round(compareCity.main.feels_like)}{temperatureSymbol}</span>
                   </div>
                   <div className="comparison-detail-item">
                     <span className="detail-label">Humidity</span>
-                    <span className="detail-value">{compareCity.humidity}%</span>
+                    <span className="detail-value">{compareCity.main.humidity}%</span>
                   </div>
                   <div className="comparison-detail-item">
                     <span className="detail-label">Wind Speed</span>
-                    <span className="detail-value">{compareCity.windSpeed} m/s</span>
+                    <span className="detail-value">{compareCity.wind.speed} {unit === 'metric' ? 'm/s' : 'mph'}</span>
                   </div>
                 </div>
               </div>
@@ -345,126 +304,33 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
       )}
 
       <style jsx>{`
-        /* Static Weather Cards Styles */
-        .static-weather-cards {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: var(--spacing-lg, 1.5rem);
-          margin-bottom: var(--spacing-xl, 2rem);
+        .compare-buttons-section {
+          margin-top: 2rem;
+          padding-top: 2rem;
+          border-top: 2px solid rgba(229, 231, 235, 0.5);
         }
 
-        .static-weather-card {
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border-radius: var(--radius-2xl, 1.5rem);
-          overflow: hidden;
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-                      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-          min-height: 450px;
-        }
-
-        .static-weather-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-        }
-
-        .static-weather-content {
-          padding: 2rem 1.5rem;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-        }
-
-        .static-weather-city {
-          font-size: 1.4rem;
-          font-weight: 700;
-          color: var(--gray-900, #111827);
-          margin-bottom: 0.5rem;
-        }
-
-        .static-weather-time {
-          font-size: 0.875rem;
-          color: var(--gray-600, #4b5563);
-          margin-bottom: 1.5rem;
-        }
-
-        .static-weather-icon {
-          font-size: 4rem;
-          margin: 1rem 0;
-          animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-
-        .static-weather-temp {
-          font-size: 3rem;
-          font-weight: 800;
-          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          margin: 0.5rem 0;
-        }
-
-        .static-weather-desc {
+        .compare-title {
           font-size: 1.1rem;
-          color: var(--gray-700);
-          font-weight: 600;
-          text-transform: capitalize;
-          margin-bottom: 1.5rem;
-        }
-
-        .static-weather-details {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-          background: rgba(243, 244, 246, 0.6);
-          border-radius: 0.75rem;
-          padding: 1rem;
-          margin-bottom: 1rem;
-        }
-
-        .static-detail {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 0.5rem;
-          background: rgba(255, 255, 255, 0.8);
-          border-radius: 0.5rem;
-        }
-
-        .static-detail-icon {
-          font-size: 1.5rem;
-        }
-
-        .static-detail-label {
-          font-size: 0.75rem;
-          color: var(--gray-600);
-          text-transform: uppercase;
-          font-weight: 600;
-          text-align: left;
-        }
-
-        .static-detail-value {
-          font-size: 1rem;
           font-weight: 700;
-          color: var(--gray-900);
-          text-align: left;
+          color: var(--gray-700);
+          margin-bottom: 1rem;
+          text-align: center;
         }
 
-        /* Compare Button */
+        .compare-buttons {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 1rem;
+        }
+
         .compare-button {
-          margin-top: auto;
-          padding: 0.875rem 1.5rem;
+          padding: 1rem 1.5rem;
           background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
           color: white;
           border: none;
           border-radius: 0.75rem;
-          font-size: 0.95rem;
+          font-size: 1rem;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.25s;
@@ -488,7 +354,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
           font-size: 1.2rem;
         }
 
-        /* Comparison Modal */
+        /* Comparison Modal Styles */
         .comparison-overlay {
           position: fixed;
           top: 0;
@@ -542,8 +408,8 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
           height: 2.5rem;
           border-radius: 50%;
           border: none;
-          background: var(--gray-200);
-          color: var(--gray-700);
+          background: #e5e7eb;
+          color: #374151;
           font-size: 1.5rem;
           cursor: pointer;
           transition: all 0.2s;
@@ -553,21 +419,21 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
         }
 
         .close-button:hover {
-          background: var(--gray-300);
+          background: #d1d5db;
           transform: rotate(90deg);
         }
 
         .comparison-title {
           font-size: 2rem;
           font-weight: 800;
-          color: var(--gray-900);
+          color: #111827;
           margin-bottom: 0.5rem;
           text-align: center;
         }
 
         .comparison-subtitle {
           font-size: 1rem;
-          color: var(--gray-600);
+          color: #6b7280;
           text-align: center;
           margin-bottom: 2rem;
         }
@@ -583,7 +449,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
           background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
           border-radius: 1rem;
           padding: 1.5rem;
-          border: 2px solid var(--gray-200);
+          border: 2px solid #e5e7eb;
         }
 
         .comparison-card-header {
@@ -598,7 +464,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
         .comparison-card-header h3 {
           font-size: 1.25rem;
           font-weight: 700;
-          color: var(--gray-900);
+          color: #111827;
         }
 
         .comparison-badge {
@@ -623,7 +489,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
         .comparison-main {
           text-align: center;
           padding: 1rem 0;
-          border-bottom: 2px solid var(--gray-200);
+          border-bottom: 2px solid #e5e7eb;
           margin-bottom: 1rem;
         }
 
@@ -643,7 +509,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
 
         .comparison-desc {
           font-size: 1rem;
-          color: var(--gray-700);
+          color: #374151;
           font-weight: 600;
           text-transform: capitalize;
         }
@@ -660,22 +526,21 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
           padding: 0.75rem;
           background: white;
           border-radius: 0.5rem;
-          border: 1px solid var(--gray-200);
+          border: 1px solid #e5e7eb;
         }
 
         .comparison-detail-item .detail-label {
           font-size: 0.875rem;
-          color: var(--gray-600);
+          color: #6b7280;
           font-weight: 600;
         }
 
         .comparison-detail-item .detail-value {
           font-size: 0.875rem;
           font-weight: 700;
-          color: var(--gray-900);
+          color: #111827;
         }
 
-        /* Comparison Indicators */
         .comparison-indicators {
           display: flex;
           flex-direction: column;
@@ -694,7 +559,7 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
         .indicator-label {
           font-size: 0.875rem;
           font-weight: 600;
-          color: var(--gray-600);
+          color: #6b7280;
           text-align: center;
         }
 
@@ -713,7 +578,6 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
           font-size: 1.1rem;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
           .comparison-grid {
             grid-template-columns: 1fr;
@@ -729,10 +593,6 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
         }
 
         @media (max-width: 768px) {
-          .static-weather-cards {
-            grid-template-columns: 1fr;
-          }
-
           .comparison-modal {
             padding: 1.5rem;
           }
@@ -744,6 +604,10 @@ const DetailCard = ({ weatherData, getWeatherIcon, formatTime, unit, temperature
           .indicator-badge {
             font-size: 0.75rem;
             padding: 0.4rem 0.8rem;
+          }
+
+          .compare-buttons {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
