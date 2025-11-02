@@ -93,7 +93,7 @@ npm run lint
 <img width="3840" height="2654" alt="localhost_5173_ (3)" src="https://github.com/user-attachments/assets/c1de659b-14d5-40fa-b12e-b1e90ccb9ee1" />
 <img width="3840" height="976" alt="localhost_5173_ (4)" src="https://github.com/user-attachments/assets/afa2d562-7fc8-4592-b7b5-f3f801dafe9c" />
 
-### 2. Autocomplete Feature - 98 Kota Indonesia
+### 2. Autocomplete Feature 
 <img width="946" height="412" alt="image" src="https://github.com/user-attachments/assets/7e630452-644a-4c0e-9938-b4ea2a9606af" />
 
 ### 3. Detail Cuaca Kota yang Dicari
@@ -114,6 +114,10 @@ npm run lint
 
 ### 8. Error Handling
 <img width="944" height="329" alt="image" src="https://github.com/user-attachments/assets/9eeaedfc-082b-4012-aaf9-a2bf338d6b70" />
+
+### 9. Tampilan Pada Mobile
+<img width="481" height="346" alt="image" src="https://github.com/user-attachments/assets/1bc275a8-3d1d-4b90-a0f6-1345209d3678" />
+
 
 ## Struktur Project
 ```
@@ -183,7 +187,7 @@ weather-dashboard/
 - 5 hari prakiraan cuaca
 - Real-time data processing
 
-✅ **7+ Kolom**
+✅ **Kolom**
 1. Date (formatted)
 2. Weather Icon (emoji-based)
 3. Temperature (High/Low)
@@ -205,7 +209,7 @@ weather-dashboard/
 - Min-width: 600px untuk horizontal scroll
 
 ### 3. CSS Styling 
-✅ **3+ Jenis Selector**
+✅ **Jenis Selector**
 - Element selector: `body`, `button`, `input`, `table`
 - Class selector: `.App`, `.search-button`, `.weather-card`
 - ID selector: (tidak digunakan, mengikuti best practice React)
@@ -348,14 +352,14 @@ const handleSearch = async (city) => {
 - Default parameters: `fetchWeather(city, units = 'metric')`
 
 ### 6. React Implementation 
-✅ **Functional Components (4+)**
+✅ **Functional Components**
 1. `App.jsx` - Main container component
 2. `Header.jsx` - Header with title
 3. `SearchForm.jsx` - Search form with autocomplete
 4. `DataTable.jsx` - Forecast table
 5. `DetailCard.jsx` - Weather detail card with comparison
 
-✅ **useState (10+ states)**
+✅ **useState**
 ```javascript
 const [weatherData, setWeatherData] = useState(null);
 const [forecastData, setForecastData] = useState([]);
