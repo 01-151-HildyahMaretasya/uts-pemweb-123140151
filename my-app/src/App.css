@@ -1,6 +1,4 @@
-/* ============================================
-   RESET & BASE STYLES
-   ============================================ */
+/* RESET & BASE STYLES */
 * {
   margin: 0;
   padding: 0;
@@ -86,9 +84,7 @@ body::before {
   z-index: 0;
 }
 
-/* ============================================
-   APP CONTAINER
-   ============================================ */
+/* APP CONTAINER */
 .App {
   position: relative;
   max-width: 1400px;
@@ -97,9 +93,7 @@ body::before {
   z-index: 1;
 }
 
-/* ============================================
-   HEADER STYLES
-   ============================================ */
+/* HEADER STYLES */
 .header {
   text-align: center;
   margin-bottom: var(--spacing-xl);
@@ -126,18 +120,14 @@ body::before {
   letter-spacing: 0.01em;
 }
 
-/* ============================================
-   MAIN CONTENT LAYOUT
-   ============================================ */
+/* MAIN CONTENT LAYOUT */
 .main-content {
   display: grid;
   gap: var(--spacing-lg);
   animation: fadeInUp 0.6s ease-out 0.2s backwards;
 }
 
-/* ============================================
-   SEARCH FORM STYLES
-   ============================================ */
+/* SEARCH FORM STYLES */
 .search-section {
   background: var(--card-bg);
   backdrop-filter: blur(20px);
@@ -282,9 +272,7 @@ body::before {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* ============================================
-   CURRENT WEATHER CARD
-   ============================================ */
+/* CURRENT WEATHER CARD */
 .current-weather {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
   backdrop-filter: blur(20px);
@@ -422,9 +410,7 @@ body::before {
   font-size: 1.3rem;
 }
 
-/* ============================================
-   FORECAST TABLE
-   ============================================ */
+/* FORECAST TABLE */
 .forecast-section {
   background: var(--card-bg);
   backdrop-filter: blur(20px);
@@ -529,9 +515,7 @@ body::before {
   opacity: 0.8;
 }
 
-/* ============================================
-   HISTORY SECTION
-   ============================================ */
+/* HISTORY SECTION */
 .history-section {
   background: var(--card-bg);
   backdrop-filter: blur(20px);
@@ -612,9 +596,7 @@ body::before {
   font-size: 0.95rem;
 }
 
-/* ============================================
-   LOADING & ERROR STATES
-   ============================================ */
+/* LOADING & ERROR STATES */
 .loading,
 .error {
   text-align: center;
@@ -652,9 +634,7 @@ body::before {
   margin-bottom: var(--spacing-md);
 }
 
-/* ============================================
-   ANIMATIONS
-   ============================================ */
+/* ANIMATIONS */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -701,9 +681,7 @@ body::before {
   }
 }
 
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
+/* RESPONSIVE DESIGN */
 @media (min-width: 768px) {
   .search-form {
     flex-direction: row;
@@ -778,9 +756,7 @@ body::before {
   }
 }
 
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
+/* ACCESSIBILITY */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -798,9 +774,7 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-/* ============================================
-   PRINT STYLES
-   ============================================ */
+/* PRINT STYLES */
 @media print {
   body {
     background: white;
