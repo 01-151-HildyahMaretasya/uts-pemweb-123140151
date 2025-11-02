@@ -8,7 +8,7 @@ const DetailCard = ({
   temperatureSymbol,
   showCompare = false,
   jakartaWeather = null,
-  iknWeather = null
+  denpasarWeather = null
 }) => {
   const [showComparison, setShowComparison] = useState(false);
   const [compareCity, setCompareCity] = useState(null);
@@ -149,7 +149,7 @@ const DetailCard = ({
         </div>
 
         {/* Compare Buttons - Only show after search */}
-        {showCompare && jakartaWeather && iknWeather && (
+        {showCompare && jakartaWeather && denpasarWeather && (
           <div className="compare-buttons-section">
             <h4 className="compare-title">Compare with:</h4>
             <div className="compare-buttons">
@@ -163,11 +163,11 @@ const DetailCard = ({
               </button>
               <button 
                 className="compare-button"
-                onClick={() => handleCompare(iknWeather)}
-                aria-label="Compare weather with IKN Nusantara"
+                onClick={() => handleCompare(denpasarWeather)}
+                aria-label="Compare weather with Denpasar"
               >
                 <span className="compare-icon">⚖️</span>
-                IKN Nusantara
+                Denpasar
               </button>
             </div>
           </div>

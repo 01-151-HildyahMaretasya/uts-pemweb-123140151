@@ -13,7 +13,7 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState([]);
   const [jakartaWeather, setJakartaWeather] = useState(null);
-  const [iknWeather, setIknWeather] = useState(null);
+  const [denpasarWeather, setDenpasarWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [staticLoading, setStaticLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ function App() {
     localStorage.setItem('weatherSearchHistory', JSON.stringify(searchHistory));
   }, [searchHistory]);
 
-  // Fetch static cities (Jakarta & IKN) on mount and every 10 minutes
+  // Fetch static cities (Jakarta & Denpasar) on mount and every 10 minutes
   useEffect(() => {
     fetchStaticCities();
     const interval = setInterval(fetchStaticCities, 600000); // Update every 10 minutes
@@ -37,12 +37,12 @@ function App() {
   const fetchStaticCities = async () => {
     setStaticLoading(true);
     try {
-      const [jakarta, ikn] = await Promise.all([
+      const [jakarta, denpasar] = await Promise.all([
         fetchWeather('Jakarta', unit),
-        fetchWeather('Balikpapan', unit) // IKN is near Balikpapan
+        fetchWeather('Denpasar', unit) // Denpasar 
       ]);
       setJakartaWeather(jakarta);
-      setIknWeather(ikn);
+      setDenpasarWeather(denpasar);
     } catch (err) {
       console.error('Failed to fetch static cities:', err);
     } finally {
@@ -304,7 +304,7 @@ function App() {
               temperatureSymbol={getTemperatureSymbol()}
               showCompare={true}
               jakartaWeather={jakartaWeather}
-              iknWeather={iknWeather}
+              denpasarWeather={denpasarWeather}
             />
           </div>
         )}
@@ -313,7 +313,7 @@ function App() {
         <div className="static-weather-section">
           <div className="static-weather-cards">
             {renderStaticCard(jakartaWeather, 'Jakarta')}
-            {renderStaticCard(iknWeather, 'IKN Nusantara')}
+            {renderStaticCard(denpasarWeather, 'Denpasar')}
           </div>
         </div>
 
