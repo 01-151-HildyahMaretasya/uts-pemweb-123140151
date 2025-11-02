@@ -57,10 +57,7 @@ npm install
 3. **Konfigurasi API Key**
 - Daftar di [OpenWeatherMap](https://openweathermap.org/api) untuk mendapatkan API key gratis
 - Buka file `src/App.jsx`
-- Ganti value `API_KEY` dengan API key Anda:
-```javascript
-const API_KEY = 'your_api_key_here';
-```
+- Ganti value `API_KEY` dengan API key Anda
 
 4. **Jalankan Development Server**
 ```bash
@@ -93,42 +90,30 @@ npm run lint
 ## Screenshot Aplikasi
 
 ### 1. Halaman Utama (Desktop View)
+<img width="3840" height="2654" alt="localhost_5173_ (3)" src="https://github.com/user-attachments/assets/c1de659b-14d5-40fa-b12e-b1e90ccb9ee1" />
+<img width="3840" height="976" alt="localhost_5173_ (4)" src="https://github.com/user-attachments/assets/afa2d562-7fc8-4592-b7b5-f3f801dafe9c" />
 
 ### 2. Autocomplete Feature - 98 Kota Indonesia
-![Autocomplete Feature](./screenshots/autocomplete.png)
-*Fitur autocomplete untuk pencarian dengan 98 kota di Indonesia + kota internasional*
+<img width="946" height="412" alt="image" src="https://github.com/user-attachments/assets/7e630452-644a-4c0e-9938-b4ea2a9606af" />
 
 ### 3. Detail Cuaca Kota yang Dicari
-![Detail Weather](./screenshots/weather-detail.png)
-*Informasi detail cuaca termasuk temperature, feels like, humidity, pressure, wind speed, cloudiness, dan visibility*
+<img width="944" height="412" alt="image" src="https://github.com/user-attachments/assets/bcf395fe-da05-4868-847e-4d8e064a6376" />
 
 ### 4. Tabel Forecast 5 Hari
-![Forecast Table](./screenshots/forecast-table.png)
-*Prakiraan cuaca 5 hari ke depan dengan data lengkap dalam format tabel responsif*
+<img width="945" height="344" alt="image" src="https://github.com/user-attachments/assets/36da0c6c-f1a5-40bc-9440-cfeb4945441a" />
 
 ### 5. Fitur Perbandingan Cuaca
-![Weather Comparison Modal](./screenshots/comparison-modal.png)
-*Modal perbandingan cuaca dengan visual indicators (warmer/cooler/higher/lower)*
+<img width="942" height="410" alt="image" src="https://github.com/user-attachments/assets/26625627-1f15-411d-9020-5ef33b2aa800" />
+<img width="944" height="407" alt="image" src="https://github.com/user-attachments/assets/7124ae90-fde2-433c-8861-43c77597b7b6" />
 
 ### 6. Static Weather Cards - Jakarta & Denpasar
-![Static Cards](./screenshots/static-cards.png)
-*Cuaca real-time Jakarta & Denpasar yang update otomatis setiap 10 menit*
+<img width="947" height="394" alt="image" src="https://github.com/user-attachments/assets/ead03e1c-d2cf-408e-b94f-bc396e85f833" />
 
 ### 7. History Pencarian dengan Clear All
-![Search History](./screenshots/search-history.png)
-*Riwayat pencarian kota yang disimpan di localStorage dengan tombol "Clear All"*
+<img width="944" height="122" alt="image" src="https://github.com/user-attachments/assets/9b9e69ac-d03f-43ee-91bd-2a4cb5029a2e" />
 
-### 8. Responsive Mobile View
-![Mobile View](./screenshots/mobile-view.png)
-*Tampilan responsive untuk perangkat mobile dengan horizontal scroll pada tabel*
-
-### 9. Loading State
-![Loading State](./screenshots/loading.png)
-*Loading indicator saat fetch data dari API*
-
-### 10. Error Handling
-![Error State](./screenshots/error.png)
-*User-friendly error message dengan emoji*
+### 8. Error Handling
+<img width="944" height="329" alt="image" src="https://github.com/user-attachments/assets/9eeaedfc-082b-4012-aaf9-a2bf338d6b70" />
 
 ## Struktur Project
 ```
@@ -545,20 +530,6 @@ Base: < 480px (Mobile)
 - Keyboard navigation support
 - Screen reader friendly
 - Semantic HTML structure
-
-## Environment Variables (Deployment)
-
-Untuk deployment di Vercel, tambahkan environment variable:
-
-```
-Name: VITE_API_KEY
-Value: your_openweathermap_api_key
-```
-
-Kemudian update `App.jsx`:
-```javascript
-const API_KEY = import.meta.env.VITE_API_KEY || '2a03b14974b5cdcb68aaacf0556e7d77';
-```
 
 ## Testing
 
