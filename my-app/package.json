@@ -4,16 +4,18 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Modern weather dashboard built with React and OpenWeatherMap API",
-  "author": "Your Name <your.email@example.com>",
+  "author": "Hildyah Maretasya Araffad <123140151>",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "NODE_ENV=production vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "vercel-build": "vite build"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.2"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -25,8 +27,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.16",
-    "vite": "^5.4.2"
+    "tailwindcss": "^4.1.16"
   },
   "keywords": [
     "react",
@@ -38,9 +39,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/uts-pemweb-nim.git"
+    "url": "https://github.com/01-151-HildyahMaretasya/uts-pemweb-123140151.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/uts-pemweb-nim/issues"
+    "url": "https://github.com/01-151-HildyahMaretasya/uts-pemweb-123140151/issues"
   }
 }
