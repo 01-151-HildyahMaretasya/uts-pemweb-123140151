@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "main": "src/main.jsx",
   "description": "Modern weather dashboard built with React and OpenWeatherMap API",
   "author": "Hildyah Maretasya Araffad <123140151>",
   "scripts": {
